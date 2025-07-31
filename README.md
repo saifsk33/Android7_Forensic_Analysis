@@ -5,7 +5,8 @@ A hands-on forensic analysis using Autopsy on Android 7 image
 This project is a complete forensic walkthrough using Autopsy on an Android 7 system image. The goal was to simulate a real-world investigation and extract key data artifacts, deleted items, web accounts, and messaging records.
 
 ---
-
+## 🎯 User Behavior & Device Profiling
+Goal: To uncover insights into the user’s behavior patterns, communication style, app usage, and device configuration.
 ## 🔍 Case Objectives
 
 - Extract messages, contacts, and web credentials.
@@ -23,7 +24,6 @@ This project is a complete forensic walkthrough using Autopsy on an Android 7 sy
 - ✅ **Verified deleted network config file and interfaces (`rt_tables`)**
 - ✅ **Recovered contact lists from Viber, WhatsApp, and default contact apps**
 - ✅ **Logged suspicious boot activity (`bootstat/boot_complete`)**
-- ✅ **Detected encrypted files (`signal.db`, `modem.b20`, etc.)**
 
 ---
 
@@ -46,7 +46,7 @@ Android Messages (SMS)
 
 SMS Registration Confirmation – TracFone (User Number Identification)
 
-
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(30).png?raw=true)
 
 🔍 Observation:
 The first SMS received on the device is from short code 31778, linked to TracFone, a U.S. prepaid mobile provider. The message includes the user's assigned phone number.
@@ -58,7 +58,9 @@ The first SMS received on the device is from short code 31778, linked to TracFon
 📌 Significance:
 This message confirms the user’s phone number as +1 919-758-0276, which can be used as a reference point when mapping other communications throughout the device.
 
-![Screenshot](https://raw.githubusercontent.com/saifsk33/Android7_Forensic_Analysis/2702b859865ba6afe71b89ae865a9985999f8593/images/Screenshot%20(29).png)
+---
+## 🔐Encryption of user identity by Android Message system
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(29).png?raw=true)
 
 🔍 Observation: 
 Autopsy analysis shows that inbound SMS messages retain sender phone numbers in plain text (e.g., +19102697333), while the user’s own number is abstracted using a UUID format (e.g., 3e436738-93b7-4fb9-ab39-dfd6e2f5bcdf).
@@ -70,6 +72,22 @@ A sample SMS from +19102697333 reads:
 
 📌 Significance:
 This pattern suggests that the Android Messages app internally encrypts or abstracts the user’s identity but not the sender’s. This helps investigators confirm communication origin while also tying a UUID to the device owner for further tracking.
+
+## 📱 Viber Messaging – No Number Encryption
+
+
+🔍 Observation:
+Viber stores both the sender's and receiver's phone numbers in plain text, unlike native SMS apps which encrypt the user's number. A typical Viber message appears as:
+
+📄 Evidence:
+
+From: +1 919-758-0276
+To: +1 910-269-7333
+Message: “Hey there. I have never heard of this app, but it’s pretty popular.”
+
+📌 Significance:
+The lack of encryption simplifies the process of tracing communication between specific parties. However, it also presents potential privacy vulnerabilities in Viber’s data storage practices.
+
 
 
 ---
