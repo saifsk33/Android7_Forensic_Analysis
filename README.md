@@ -41,7 +41,7 @@ Goal: To uncover insights into the user’s behavior patterns, communication sty
 
 ---
 
-## 📱 Messages
+## 📱Messaging App Analysis & User Identification
 Android Messages (SMS)
 
 SMS Registration Confirmation – TracFone (User Number Identification)
@@ -66,9 +66,7 @@ This message confirms the user’s phone number as +1 919-758-0276, which can be
 Autopsy analysis shows that inbound SMS messages retain sender phone numbers in plain text (e.g., +19102697333), while the user’s own number is abstracted using a UUID format (e.g., 3e436738-93b7-4fb9-ab39-dfd6e2f5bcdf).
 
 📄 Evidence:
-A sample SMS from +19102697333 reads:
-
-"That's fine. Sometimes SMS is better."
+>A sample SMS from +19102697333 reads: "That's fine. Sometimes SMS is better."
 
 📌 Significance:
 This pattern suggests that the Android Messages app internally encrypts or abstracts the user’s identity but not the sender’s. This helps investigators confirm communication origin while also tying a UUID to the device owner for further tracking.
@@ -110,6 +108,36 @@ The recipient's number (user) is obfuscated using a UUID format, while the sende
 
 Significance:
 This pattern of storage is similar to the native Android Messaging app. It suggests WhatsApp encrypts or replaces the user’s number with a unique identifier (possibly for privacy), while allowing incoming message origins to be clearly traced. This can help in mapping contact networks but limits visibility into full two-way communication unless additional user ID mappings are found.
+
+## 📲 IMO Messaging – Full Number Obfuscation
+
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(32).png?raw=true)
+
+Observation:
+In messages extracted from the IMO messaging app, both the sender and receiver identifiers appear as numerical codes, rather than actual phone numbers.
+
+> From: 2002241318462661
+
+>To: 2002144460145418
+
+>Message: "He there! Welcome to IMO. About time you showed up."
+
+
+
+Significance:
+Unlike other messaging platforms analyzed (such as Android Messages, WhatsApp, and Viber), IMO does not store phone numbers in plain text. Instead, it likely uses internal user or device IDs for both sender and recipient. This may indicate a higher level of privacy protection or internal indexing.
+
+This limits direct user identification unless these codes can be mapped to known numbers through other artifacts or app databases. Same goes for Facebook Messenger and Shareit.
+
+## 🧾 Conclusion: Messaging App Analysis & User Identification
+The user's phone number was successfully uncovered through the Viber messaging app, which stored both sender and receiver information in plain text. The user's phone number (+1 919-758-0276) was further confirmed via an SMS from TracFone, a U.S.-based prepaid mobile provider, in a welcome message stating the assigned number.
+
+Among the messaging apps analyzed, Android Messages, Viber, and WhatsApp all retained the sender's contact number in plain text, allowing investigators to identify communication partners and reconstruct chat patterns. Notably, incoming messages across these platforms consistently referenced the same number: +1 910-269-7333, stored as Josh Hickman in the device's contacts2.db.
+
+In contrast, messaging platforms such as Facebook Messenger, IMO, and SHAREit stored both sender and receiver identifiers in obfuscated or numerical formats, offering limited traceability without deeper database correlation or cross-referencing.
+
+📌 Key Insight:
+Across multiple platforms, the user consistently communicated with the same contact — Josh Hickman — using different messaging apps. This strongly suggests that Josh Hickman was the user’s primary or only active contact during the device's period of use.
 
 ---
 
