@@ -129,6 +129,42 @@ Unlike other messaging platforms analyzed (such as Android Messages, WhatsApp, a
 
 This limits direct user identification unless these codes can be mapped to known numbers through other artifacts or app databases. Same goes for Facebook Messenger and Shareit.
 
+## 📲Google App Cache – Weather & Content Personalization Evidence
+
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(56).png?raw=true)
+
+📁 Source File Path:
+/img_blk0_mmcb1k0.bin/vol_vol52/data/com.android.vending/cache/images/OI-9C6HsEyXIZZEgktnUxkOddoA
+
+Observation: Analysis of a cache file linked to the Google App (or its Discover feed component) states strong indicators of user interaction with weather and news card features which reveals repeated references to "Holly Springs," a real geographic location.
+Notable content includes:
+- Repeated references to *Holly Springs* — a real geographic location.
+ 
+- Weather descriptions such as: 
+ 
+“Clear with periodic clouds” “Partly Cloudy” “Thursday” / “Friday”
+
+- User interface phrases associated with Discover feed interaction:
+
+“Hide this story”
+
+“Change temperature units to C”
+
+“Never show weather updates”
+
+“Not interested in Donald Trump”
+
+“Customize weather”
+
+"Card category: WEATHER"
+
+"Send feedback", "Story hiddenR", "Donald Trump", "Not interested in Donald Trump"
+
+Significance:
+These references strongly suggest the user searched for or viewed weather data related to Holly Springs, pointing to a potential user location or area of interest.
+The political filtering entry (“Not interested in Donald Trump”) and feedback-related strings point to personalized content curation behavior. Together, this strengthens behavioral profiling and provides potential geographic context.
+
+
 ## 🧾 Conclusion: Messaging App Analysis & User Identification
 The user's phone number was successfully uncovered through the Viber messaging app, which stored both sender and receiver information in plain text. The user's phone number (+1 919-758-0276) was further confirmed via an SMS from TracFone, a U.S.-based prepaid mobile provider, in a welcome message stating the assigned number.
 
