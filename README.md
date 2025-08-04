@@ -41,110 +41,68 @@ Goal: To uncover insights into the user’s behavior patterns, communication sty
 
 ---
 
-## 📱Messaging App Analysis & User Identification
-Android Messages (SMS)
+## 📡 **Recovered Deleted Wi-Fi Configuration Containing SSIDs, Passwords, and Device Info**
 
-SMS Registration Confirmation – TracFone (User Number Identification)
+**🧠 What Was Found:**
 
-![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(30).png?raw=true)
+A deleted file located at:
 
-🔍 Observation:
-The first SMS received on the device is from short code 31778, linked to TracFone, a U.S. prepaid mobile provider. The message includes the user's assigned phone number.
-
-📄 Evidence:
-
-“Welcome to TracFone! Your number is: 9197580276, your Last Day of Service is 01/28/2019…”
-
-📌 Significance:
-This message confirms the user’s phone number as +1 919-758-0276, which can be used as a reference point when mapping other communications throughout the device.
+/misc/radio/modem_config/.../AdsDynamite.apk
 
 
-## 🔐Encryption of user identity by Android Message system
-![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(29).png?raw=true)
+Though partially removed, this file retained critical configuration data:
 
-🔍 Observation: 
-Autopsy analysis shows that inbound SMS messages retain sender phone numbers in plain text (e.g., +19102697333), while the user’s own number is abstracted using a UUID format (e.g., 3e436738-93b7-4fb9-ab39-dfd6e2f5bcdf).
+### 🔍 Device Details:
 
-📄 Evidence:
->A sample SMS from +19102697333 reads: "That's fine. Sometimes SMS is better."
-
-📌 Significance:
-This pattern suggests that the Android Messages app internally encrypts or abstracts the user’s identity but not the sender’s. This helps investigators confirm communication origin while also tying a UUID to the device owner for further tracking.
-
-## 📱 Viber Messaging – No Number Encryption
-
-![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(36).png?raw=true)
-
-🔍 Observation:
-Viber stores both the sender's and receiver's phone numbers in plain text, unlike native SMS apps which encrypt the user's number. A typical Viber message appears as:
-
-📄 Evidence:
-
->From: +1 919-758-0276
-
->To: +1 910-269-7333
-
->Message: “Hey there. I have never heard of this app, but it’s pretty popular.”
-
-📌 Significance:
-The lack of encryption simplifies the process of tracing communication between specific parties. However, it also presents potential privacy vulnerabilities in Viber’s data storage practices.
-
-## 📲 WhatsApp Messaging – Partial Number Obfuscation
-
-![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(31).png?raw=true)
-
-Observation:
-Messages extracted from WhatsApp reveal that the sender’s phone number is stored in plain text, as seen in the screenshot:
-
->From: 19102697333@s.whatsapp.net
-
->To: 3e436738-93b7-4fb9-ab39-dfd6e2f5bcdf
-
->Message: "Hey man! What’s happening? Welcome to WhatsApp!"
+| Key           | Value          |
+| ------------- | -------------- |
+| Manufacturer  | LGE            |
+| Model Name    | Nexus 5X       |
+| Serial Number | 0295111f431f6d |
+| Device Name   | bullhead       |
 
 
+### 📶 Wi-Fi Network Artifacts:
 
-The recipient's number (user) is obfuscated using a UUID format, while the sender's identity remains visible.
+Two saved Wi-Fi profiles were successfully recovered, including SSID, BSSID, and PSK:
 
-Significance:
-This pattern of storage is similar to the native Android Messaging app. It suggests WhatsApp encrypts or replaces the user’s number with a unique identifier (possibly for privacy), while allowing incoming message origins to be clearly traced. This can help in mapping contact networks but limits visibility into full two-way communication unless additional user ID mappings are found.
+#### 1️⃣ First Wi-Fi Network:
 
-## 📲 IMO Messaging – Full Number Obfuscation
+* **SSID**: E04201358294
+* **BSSID**: 00:19:77:37:4d:54
+* **Password (PSK)**: 2ThisFor@llIs#
+* **Key Management**: WPA-PSK
 
-![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(32).png?raw=true)
+#### 2️⃣ Second Wi-Fi Network:
 
-Observation:
-In messages extracted from the IMO messaging app, both the sender and receiver identifiers appear as numerical codes, rather than actual phone numbers.
-
-> From: 2002241318462661
-
->To: 2002144460145418
-
->Message: "He there! Welcome to IMO. About time you showed up."
-
+* **SSID**: CcookiesDcastleR5
+* **BSSID**: f8:bb:bb:1f:fa:e8
+* **Password (PSK)**: SorryThereIsNoPasswordHere
+* **Key Management**: WPA-PSK
 
 
-Significance:
-Unlike other messaging platforms analyzed (such as Android Messages, WhatsApp, and Viber), IMO does not store phone numbers in plain text. Instead, it likely uses internal user or device IDs for both sender and recipient. This may indicate a higher level of privacy protection or internal indexing.
+#### 🔐 Significance:
 
-This limits direct user identification unless these codes can be mapped to known numbers through other artifacts or app databases. Same goes for Facebook Messenger and Shareit.
+* The Wi-Fi credentials and hardware identifiers were found inside a **deleted APK configuration**, showing the data wasn’t completely erased.
+* These SSIDs and passwords may help **establish geographic location**, **user movement**, or **connection timelines**.
+* The serial number, device codename (bullhead), and model help **identify the physical device** involved.
 
 ## 📲Google App Cache – Weather & Content Personalization Evidence
 
 ![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(56).png?raw=true)
 
-📁 Source File Path:
+#### 📁 Source File Path:
 /img_blk0_mmcb1k0.bin/vol_vol52/data/com.android.vending/cache/images/OI-9C6HsEyXIZZEgktnUxkOddoA
 
-Observation: Analysis of a cache file linked to the Google App (or its Discover feed component) states strong indicators of user interaction with weather and news card features which reveals repeated references to "Holly Springs," a real geographic location.
+#### Observation: 
+Analysis of a deleted cache file linked to the Google App (or its Discover feed component) states strong indicators of user interaction with weather and news card features which reveals repeated references to "Holly Springs," a real geographic location.
+
 Notable content includes:
-- Repeated references to *Holly Springs* — a real geographic location.
+Repeated references to *Holly Springs* — a real geographic location.
  
-- Weather descriptions such as: 
+User interface phrases associated with Discover feed interaction & Weather descriptions such as: 
  
 “Clear with periodic clouds” “Partly Cloudy” “Thursday” / “Friday”
-
-- User interface phrases associated with Discover feed interaction:
 
 “Hide this story”
 
@@ -160,9 +118,100 @@ Notable content includes:
 
 "Send feedback", "Story hiddenR", "Donald Trump", "Not interested in Donald Trump"
 
-Significance:
+#### Significance:
 These references strongly suggest the user searched for or viewed weather data related to Holly Springs, pointing to a potential user location or area of interest.
 The political filtering entry (“Not interested in Donald Trump”) and feedback-related strings point to personalized content curation behavior. Together, this strengthens behavioral profiling and provides potential geographic context.
+
+
+## 📱Messaging App Analysis & User Identification
+Android Messages (SMS)
+
+SMS Registration Confirmation – TracFone (User Number Identification)
+
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(30).png?raw=true)
+
+#### 🔍 Observation:
+The first SMS received on the device is from short code 31778, linked to TracFone, a U.S. prepaid mobile provider. The message includes the user's assigned phone number.
+
+#### 📄 Evidence:
+
+“Welcome to TracFone! Your number is: 9197580276, your Last Day of Service is 01/28/2019…”
+
+#### 📌 Significance:
+This message confirms the user’s phone number as +1 919-758-0276, which can be used as a reference point when mapping other communications throughout the device.
+
+
+## 🔐Encryption of user identity by Android Message system
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(29).png?raw=true)
+
+#### 🔍 Observation: 
+Autopsy analysis shows that inbound SMS messages retain sender phone numbers in plain text (e.g., +19102697333), while the user’s own number is abstracted using a UUID format (e.g., 3e436738-93b7-4fb9-ab39-dfd6e2f5bcdf).
+
+#### 📄 Evidence:
+>A sample SMS from +19102697333 reads: "That's fine. Sometimes SMS is better."
+
+#### 📌 Significance:
+This pattern suggests that the Android Messages app internally encrypts or abstracts the user’s identity but not the sender’s. This helps investigators confirm communication origin while also tying a UUID to the device owner for further tracking.
+
+## 📱 Viber Messaging – No Number Encryption
+
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(36).png?raw=true)
+
+#### 🔍 Observation:
+Viber stores both the sender's and receiver's phone numbers in plain text, unlike native SMS apps which encrypt the user's number. A typical Viber message appears as:
+
+#### 📄 Evidence:
+
+>From: +1 919-758-0276
+
+>To: +1 910-269-7333
+
+>Message: “Hey there. I have never heard of this app, but it’s pretty popular.”
+
+#### 📌 Significance:
+The lack of encryption simplifies the process of tracing communication between specific parties. However, it also presents potential privacy vulnerabilities in Viber’s data storage practices.
+
+## 📲 WhatsApp Messaging – Partial Number Obfuscation
+
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(31).png?raw=true)
+
+#### Observation:
+Messages extracted from WhatsApp reveal that the sender’s phone number is stored in plain text, as seen in the screenshot:
+
+>From: 19102697333@s.whatsapp.net
+
+>To: 3e436738-93b7-4fb9-ab39-dfd6e2f5bcdf
+
+>Message: "Hey man! What’s happening? Welcome to WhatsApp!"
+
+
+
+The recipient's number (user) is obfuscated using a UUID format, while the sender's identity remains visible.
+
+#### Significance:
+This pattern of storage is similar to the native Android Messaging app. It suggests WhatsApp encrypts or replaces the user’s number with a unique identifier (possibly for privacy), while allowing incoming message origins to be clearly traced. This can help in mapping contact networks but limits visibility into full two-way communication unless additional user ID mappings are found.
+
+## 📲 IMO Messaging – Full Number Obfuscation
+
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(32).png?raw=true)
+
+#### Observation:
+In messages extracted from the IMO messaging app, both the sender and receiver identifiers appear as numerical codes, rather than actual phone numbers.
+
+> From: 2002241318462661
+
+>To: 2002144460145418
+
+>Message: "He there! Welcome to IMO. About time you showed up."
+
+
+
+#### Significance:
+Unlike other messaging platforms analyzed (such as Android Messages, WhatsApp, and Viber), IMO does not store phone numbers in plain text. Instead, it likely uses internal user or device IDs for both sender and recipient. This may indicate a higher level of privacy protection or internal indexing.
+
+This limits direct user identification unless these codes can be mapped to known numbers through other artifacts or app databases. Same goes for Facebook Messenger and Shareit.
+
+
 
 
 ## 🧾 Conclusion: Messaging App Analysis & User Identification
