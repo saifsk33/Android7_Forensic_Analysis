@@ -43,6 +43,8 @@ Goal: To uncover insights into the user’s behavior patterns, communication sty
 
 ## 📡 **Recovered Deleted Wi-Fi Configuration Containing SSIDs, Passwords, and Device Info**
 
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(53).png?raw=true)
+
 **🧠 What Was Found:**
 
 A deleted file located at:
@@ -81,7 +83,7 @@ Two saved Wi-Fi profiles were successfully recovered, including SSID, BSSID, and
 * **Key Management**: WPA-PSK
 
 
-#### 🔐 Significance:
+#### 📌 Significance:
 
 * The Wi-Fi credentials and hardware identifiers were found inside a **deleted APK configuration**, showing the data wasn’t completely erased.
 * These SSIDs and passwords may help **establish geographic location**, **user movement**, or **connection timelines**.
@@ -94,7 +96,7 @@ Two saved Wi-Fi profiles were successfully recovered, including SSID, BSSID, and
 #### 📁 Source File Path:
 /img_blk0_mmcb1k0.bin/vol_vol52/data/com.android.vending/cache/images/OI-9C6HsEyXIZZEgktnUxkOddoA
 
-#### Observation: 
+#### 🔍 Observation: 
 Analysis of a deleted cache file linked to the Google App (or its Discover feed component) states strong indicators of user interaction with weather and news card features which reveals repeated references to "Holly Springs," a real geographic location.
 
 Notable content includes:
@@ -118,10 +120,87 @@ User interface phrases associated with Discover feed interaction & Weather descr
 
 "Send feedback", "Story hiddenR", "Donald Trump", "Not interested in Donald Trump"
 
-#### Significance:
+#### 📌 Significance:
 These references strongly suggest the user searched for or viewed weather data related to Holly Springs, pointing to a potential user location or area of interest.
 The political filtering entry (“Not interested in Donald Trump”) and feedback-related strings point to personalized content curation behavior. Together, this strengthens behavioral profiling and provides potential geographic context.
 
+## 🔐 Web Accounts Artifact – App Credential Storage
+
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(41).png?raw=true)
+
+#### 🔍 Observation:
+
+Autopsy’s Web Accounts section reveals stored credentials and associated metadata for multiple apps and services. The evidence is sourced from blk0_mmcbkl0.bin, and includes accounts for:
+
+Google
+
+Twitter
+
+WhatsApp
+
+IMO
+
+TextNow
+
+TikTok
+
+Facebook Messenger
+
+Skype
+
+Telegram
+
+Signal
+
+
+#### 🧩 Key Findings:
+
+1. Plaintext Password Storage:
+
+⚠️ TikTok stores the password in plain text, visible as TikTok under the Password column.
+
+This poses a significant security risk and is a notable exception compared to most apps that hash or encrypt stored credentials.
+
+
+
+
+2. Hashed/Obfuscated Passwords:
+
+Apps like Google, Signal, and Telegram use hashed or token-style strings for their credentials (e.g., long alphanumeric sequences), suggesting a more secure approach.
+
+Example: 61aa7c8d9a21ce60d852eaaf749d7069d5754fa (Signal)
+
+Example: aas_et/AKpp... (Google Auth)
+
+
+
+
+3. User Identifiers:
+
+Multiple entries for the same services (e.g., WhatsApp, Google, IMO) indicate reuse across sessions or installations.
+
+User IDs include both email addresses (thisisdfir@gmail.com) and phone numbers (+19197580276).
+
+
+
+4. Program Names:
+
+Application package identifiers are listed clearly, e.g.,:
+
+com.zhiliaoapp.musically (TikTok)
+
+com.securesms (Signal)
+
+org.telegram.messenger (Telegram)
+
+com.facebook.orca (Messenger)
+
+
+#### 📌 Significance:
+
+The presence of plaintext passwords (TikTok) poses a privacy vulnerability.
+
+This artifact confirms active user accounts on at least 10 different apps and can be used to correlate messages and contact activity with specific services.
 
 ## 📱Messaging App Analysis & User Identification
 Android Messages (SMS)
@@ -175,7 +254,7 @@ The lack of encryption simplifies the process of tracing communication between s
 
 ![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(31).png?raw=true)
 
-#### Observation:
+#### 🔍 Observation:
 Messages extracted from WhatsApp reveal that the sender’s phone number is stored in plain text, as seen in the screenshot:
 
 >From: 19102697333@s.whatsapp.net
@@ -188,14 +267,14 @@ Messages extracted from WhatsApp reveal that the sender’s phone number is stor
 
 The recipient's number (user) is obfuscated using a UUID format, while the sender's identity remains visible.
 
-#### Significance:
+#### 📌 Significance:
 This pattern of storage is similar to the native Android Messaging app. It suggests WhatsApp encrypts or replaces the user’s number with a unique identifier (possibly for privacy), while allowing incoming message origins to be clearly traced. This can help in mapping contact networks but limits visibility into full two-way communication unless additional user ID mappings are found.
 
 ## 📲 IMO Messaging – Full Number Obfuscation
 
 ![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(32).png?raw=true)
 
-#### Observation:
+#### 🔍 Observation:
 In messages extracted from the IMO messaging app, both the sender and receiver identifiers appear as numerical codes, rather than actual phone numbers.
 
 > From: 2002241318462661
@@ -206,7 +285,7 @@ In messages extracted from the IMO messaging app, both the sender and receiver i
 
 
 
-#### Significance:
+#### 📌 Significance:
 Unlike other messaging platforms analyzed (such as Android Messages, WhatsApp, and Viber), IMO does not store phone numbers in plain text. Instead, it likely uses internal user or device IDs for both sender and recipient. This may indicate a higher level of privacy protection or internal indexing.
 
 This limits direct user identification unless these codes can be mapped to known numbers through other artifacts or app databases. Same goes for Facebook Messenger and Shareit.
