@@ -60,7 +60,7 @@ Though partially removed, this file retained critical configuration data:
 | ------------- | -------------- |
 | Manufacturer  | LGE            |
 | Model Name    | Nexus 5X       |
-| Serial Number | 0295111f431f6d |
+| Serial Number | 007289511f431f6d |
 | Device Name   | bullhead       |
 
 
@@ -123,6 +123,68 @@ User interface phrases associated with Discover feed interaction & Weather descr
 #### 📌 Significance:
 These references strongly suggest the user searched for or viewed weather data related to Holly Springs, pointing to a potential user location or area of interest.
 The political filtering entry (“Not interested in Donald Trump”) and feedback-related strings point to personalized content curation behavior. Together, this strengthens behavioral profiling and provides potential geographic context.
+
+Interestingly, the **system timestamp is set to IST (Indian Standard Time)**, while the cache content and weather data reference a **U.S. location**. This mismatch suggests that the user may **reside in Holly Springs** but manually set the device’s timezone to IST — a potential **indicator of deliberate obfuscation** or **cross-regional usage**. We did find SIM Operator Code in one of the db files which is called naver_line.db which confirms that the user is based in US and not India. 
+ 
+Together, this strengthens both **behavioral profiling** and **geographic inference** in the forensic analysis.
+
+## 📱 Naver Line App – Device and SIM Metadata Extracted
+
+![Screenshot](https://github.com/saifsk33/Android7_Forensic_Analysis/blob/main/images/Screenshot%20(51).png?raw=true)
+ 
+#### 🔍 Observation:
+ 
+Using **DB Browser for SQLite**, the naver_line.db file was analyzed, specifically the setting table, to extract device, SIM, and network metadata. This database belongs to the LINE messaging app.
+  
+🔢 **SIM & Carrier Information**
+ 
+- **SIM Serial Number**: 457438409
+ 
+- **SIM Operator Code (MCC+MNC)**: 310410 
+ 
+  - 310: Mobile Country Code for **United States**
+ 
+  - 410: Mobile Network Code for **AT&T**
+ 
+This confirms that the device was using an **AT&T SIM card** and was likely operating within the U.S.
+  .
+  .
+  .
+📞 **Phone & Profile Metadata**
+ 
+ 
+- **Phone Verification Timestamp**: 1543758224480 (Unix Epoch – approx. Dec 2, 2018)
+ 
+- **Country Calling Code**: +1 (United States / Canada)
+ 
+- **Profile Phone**: ZCRdmEjoMnv+fhvksIZI0Q== (Base64 encoded or encrypted)
+ 
+- **Profile Name**: jMlQW7nOoYFz+nJPzjG== (Possibly encoded username)
+ 
+- **App Version**: 19081008_8.18.1
+ 
+- **Wi-Fi Access Timestamp**: 1549351316155 (from USER_STATUS_ACCESS_WIFI_NETWORK_TIME)
+ 
+  
+🧩 **Tools Used:**
+
+ - **Autopsy**: To extract the file 
+ 
+- **SQLite Viewer**: DB Browser for SQLite
+ 
+- **File Analyzed**: naver_line.db
+ 
+  
+#### 📌 Significance:
+ 
+ 
+- The **AT&T SIM operator code** (310410) confirms usage of a U.S. carrier, supporting the case’s geolocation analysis.
+ 
+- SIM serial number, phone verification timestamp, and country code help construct the user’s device identity and timeline of use.
+ 
+- Encrypted or encoded profile fields might reveal account links if decrypted in future analysis.
+ 
+- Foreground/background timestamps and Wi-Fi activity give insight into app usage behavior.
 
 ## 🔐 Web Accounts Artifact – App Credential Storage
 
@@ -201,6 +263,8 @@ com.facebook.orca (Messenger)
 The presence of plaintext passwords (TikTok) poses a privacy vulnerability.
 
 This artifact confirms active user accounts on at least 10 different apps and can be used to correlate messages and contact activity with specific services.
+
+
 
 ## 📱Messaging App Analysis & User Identification
 Android Messages (SMS)
