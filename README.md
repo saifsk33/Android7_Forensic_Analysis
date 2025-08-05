@@ -357,15 +357,61 @@ This limits direct user identification unless these codes can be mapped to known
 
 
 
-## 🧾 Conclusion: Messaging App Analysis & User Identification
-The user's phone number was successfully uncovered through the Viber messaging app, which stored both sender and receiver information in plain text. The user's phone number (+1 919-758-0276) was further confirmed via an SMS from TracFone, a U.S.-based prepaid mobile provider, in a welcome message stating the assigned number.
+Here’s a well-written **final conclusion** section you can paste at the end of your GitHub forensic report. It wraps up your findings professionally and highlights all the critical artifacts recovered during analysis:
 
-Among the messaging apps analyzed, Android Messages, Viber, and WhatsApp all retained the sender's contact number in plain text, allowing investigators to identify communication partners and reconstruct chat patterns. Notably, incoming messages across these platforms consistently referenced the same number: +1 910-269-7333, stored as Josh Hickman in the device's contacts2.db.
+---
+  
+## 🧾 Final Conclusion
+ 
+Through methodical forensic analysis of the Android 7 image using **Autopsy** and **DB Browser for SQLite**, we successfully uncovered a wide range of user-identifiable data and device-specific insights. These findings offer strong evidence of both user activity and geographic behavior.
+ 
+### 📍 **User and Device Identification Highlights:**
+ 
+ 
+- **Device Manufacturer & Model:** Identified as **LGE Nexus 5X** (codename: *bullhead*), with unique serial number `0295111f431f6d`.
+ 
+- **SIM Information:** SIM Operator Code `310410` confirms **AT&T (U.S.)** carrier. SIM serial number and other values further strengthen the U.S.-based usage.
+ 
+- **User Phone Number:** Recovered from Android Messages (SMS) — **+1 919-758-0276** — giving us a direct line of identification.
+ 
+- **Wi-Fi Credentials:** Recovered SSIDs, BSSIDs, and passwords provide real-world geolocation clues and could link the device to specific physical locations.
+ 
 
-In contrast, messaging platforms such as Facebook Messenger, IMO, and SHAREit stored both sender and receiver identifiers in obfuscated or numerical formats, offering limited traceability without deeper database correlation or cross-referencing.
+ 
+### 🌍 **Behavioral and Location Analysis:**
+ 
+ 
+- **Google App Cache:** Revealed repeated weather data for **Holly Springs**, strongly suggesting the user either resides in or frequently monitors that location.
+ 
+- The system timezone was set to **IST (Indian Standard Time)**, despite U.S.-based indicators, which could imply **deliberate obfuscation** or **cross-border behavior**.
+ 
+- Google Discover-like artifacts showed **personalized content interaction**, including filtering out political content (e.g., “Not interested in Donald Trump”).
+ 
 
-📌 Key Insight:
-Across multiple platforms, the user consistently communicated with the same contact — Josh Hickman — using different messaging apps. This strongly suggests that Josh Hickman was the user’s primary or only active contact during the device's period of use.
+ 
+### 🔐 **Application & Communication Insights:**
+ 
+ 
+- **Credential Recovery:** Plaintext passwords from TikTok and credential traces from apps like Google, Telegram, and WhatsApp reveal significant privacy exposure.
+ 
+- **App Messaging Behavior:** 
+ 
+  - **Viber Messaging App** stored user number plainly.
+ 
+  - **WhatsApp**, **Viber** and **Android Messaging (SMS)** stored numbers with partial or no encryption.
+ 
+  - **IMO**, **Facebook Messenger**, and **ShareIt** showed full number obfuscation, offering more privacy but requiring correlation from other data sources.
+ 
+- **Line App Metadata:** Helped pinpoint timestamps of app usage, phone verification, and encoded profile fields that may aid further identity tracing.
+ 
+
+  
+### 🧠 Summary:
+ 
+This investigation reconstructed a detailed digital footprint of the device's owner — including **location behavior**, **personal accounts**, **communication history**, **Wi-Fi access**, and **device configurations**.
+ 
+The combination of **plaintext credentials**, **identified accounts**, **geographic artifacts**, and **SIM/operator evidence** paints a high-confidence picture of the user’s identity and behavior. These findings not only support attribution and timeline construction but also demonstrate how powerful Android forensics can be in real-world investigations.
+  
 
 ---
 
@@ -373,22 +419,7 @@ Across multiple platforms, the user consistently communicated with the same cont
 
 - **Autopsy** (Windows VM)
 - **DB Browser for SQLite**
-- **JSON Formatter (online)**
 - **Windows VM & Kali for dual OS setup**
-
----
-
-## ✍️ Report Notes
-
-_(Paste the notes you made during the analysis here in bullet format – e.g., suspicious messages, timestamps, what was skipped, etc.)_
-
----
-
-## 📎 Attachments
-
-- [ ] `threads_db2.db` (sanitized)
-- [ ] Recovered screenshots
-- [ ] Extracted text/logs (optional)
 
 ---
 
