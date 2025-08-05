@@ -34,15 +34,18 @@ Goal: To uncover insights into the user’s behavior patterns, communication sty
 
 ## 📂 Artifacts Collected
 
-| Artifact Type        | Tool Used        | Description |
-|----------------------|------------------|-------------|
-| Messages             | Autopsy, SQLite  | Messages from Facebook, Android Message, WhatsApp |
-| Contacts             | Autopsy          | Found in `contacts2.db`, `viber_data`, etc. |
-| Web Accounts         | Autopsy          | TikTok, WhatsApp, Signal, TextNow |
-| Deleted Files        | Autopsy          | Network configs, misc text/XML files |
-| Media Attachments    | SQLite + JSON    | Facebook video/image attachments |
-| Boot Logs            | Autopsy          | Found in `/data/misc/bootstat/` |
-| Encryption Evidence  | Autopsy          | High-entropy encrypted files (Signal, etc.) |
+| Artifact Type             | Tool Used            | Description                                                                                      |
+|---------------------------|----------------------|--------------------------------------------------------------------------------------------------|
+| **Messages**              | Autopsy, DB Browser  | SMS from Android Messages, conversations from WhatsApp, Viber and IMO      |
+| **Contacts**              | Autopsy              | Extracted from `viber_data`, and other app-specific databases                    |
+| **Web Accounts**          | Autopsy              | App credentials for TikTok (plaintext), Google, Telegram, Signal, and others                     |
+| **Deleted Files**         | Autopsy              | Contained Wi-Fi configs, device identifiers, and data from uninstalled APKs                      |
+| **Wi-Fi Configurations**  | Autopsy (Deleted APK)| SSIDs, BSSIDs, and passwords for multiple networks; useful for location correlation              |
+| **SIM & Carrier Metadata**| DB Browser (SQLite)  | SIM Serial Number, SIM Operator Code (AT&T), Country Code, and Phone Verification Timestamp      |
+| **Location Artifacts**    | Autopsy (Cache Files)| Google App cache with weather/location (Holly Springs), IST timestamp mismatch                   |
+| **Encryption Evidence**   | Autopsy              | High-entropy files from apps like Signal and IMO, indicating encrypted storage                   |
+| **Profile Metadata**      | DB Browser           | Line app profile keys, encrypted access tokens, country calling codes, and profile phone data    |
+
 
 ---
 
