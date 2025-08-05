@@ -7,23 +7,28 @@ This project is a complete forensic walkthrough using Autopsy on an Android 7 sy
 ---
 ## 🎯 User Behavior & Device Profiling
 Goal: To uncover insights into the user’s behavior patterns, communication style, app usage, and device configuration.
+
 ## 🔍 Case Objectives
 
-- Extract messages, contacts, and web credentials.
-- Recover deleted data (files, messages, images).
+- Extract messages, contacts, and user account credentials.
+- Recover deleted data (SMS, chat logs, Wi-Fi configs).
 - Identify app activity, timestamps, and user behavior.
-- Validate findings using SQLite and JSON formatting.
+- Link device metadata with user identity and location.
+- Validate findings using Autopsy, SQLite, and file system analysis.
 
 ---
 
 ## 🧠 Key Findings Summary
 
 - ✅ **Recovered TikTok password stored in plaintext**
-- ✅ **Recovered missing messages by opening `threads_db2.db` in SQLite**
-- ✅ **Extracted video metadata from Facebook messages using JSON formatter**
-- ✅ **Verified deleted network config file and interfaces (`rt_tables`)**
+- ✅ **Recovered user phone number from SMS artifacts (Android Messages)**
+- ✅ **Retrieved Wi-Fi SSIDs, BSSIDs, and passwords from deleted APK**
+- ✅ **Recovered AT&T SIM details from naver_line.db**
+- ✅ **Found Google cache content referencing Holly Springs, NC**
+- ✅ **Observed system timezone set to IST despite U.S. usage**
 - ✅ **Recovered contact lists from Viber, WhatsApp, and default contact apps**
-- ✅ **Logged suspicious boot activity (`bootstat/boot_complete`)**
+- ✅ **Identified app credentials for Google, Signal, Telegram, IMO, etc.**
+- ✅ **Recovered encrypted tokens and profile info from Line app**
 
 ---
 
