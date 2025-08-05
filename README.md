@@ -425,8 +425,7 @@ The combination of **plaintext credentials**, **identified accounts**, **geograp
 
 ## 🧑‍💻 Author
 
-**Kevin Naka**  
+**KevSec**  
 Cybersecurity & Digital Forensics Enthusiast
 
----
 
